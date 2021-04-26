@@ -1,0 +1,7 @@
+.nav-link {
+	text-decoration: none;
+	color: white;
+}
+.active-nav-link {
+	border-bottom: 1px solid white;
+}
