@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { makeStyle } from "@material-ui/core/styles";
+
+import jwtDecode from 'jwt-decode'
+import { checkIsUserLoggedIn } from '../lib/helpers'
+import Axios from '../lib/axios/Axios'
+
+import { makeStyles } from "@material-ui/core/styles";
 import {
 	FormControl,
 	FormHelperText,
@@ -15,7 +20,7 @@ import MuiAlert from "@material-ui/lab/Alert";
 import useEmailHooks from "../hooks/useEmailHooks";
 import usePasswordHooks from "../hooks/usePasswordHooks";
 
-const useStyles = makeStyle((theme) => ({
+const useStyles = makeStyles((theme) => ({
 	root: {
 		"& > *": {
 			margin: theme.spacing(1),
@@ -28,6 +33,45 @@ function Login() {
 	const classes = useStyles();
 
 	const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+	const [
+		password,
+		setPassword,
+		inputPasswordError,
+		errorPasswordMessage,
+		isPasswordOnBlur,
+		handlePasswordOnBlur,
+	] = usePasswordHooks();
+
+	const [
+		email,
+		setEmail,
+		inputEmailError,
+		errorEmailMessage,
+		isEmailOnBlur,
+		handleEmailOnBlur,
+	] = useEmailHooks();
+
+	function handleOnSubmit(e) {
+		e.preventDefault();
+
+		console.log(email);
+	}
+
+	useEffect(() => {
+		if (inputEmailError === false && inputPasswordError === false) {
+			setIsButtonDisabled(false);
+		} else {
+			setIsButtonDisabled(true);
+			return;
+		}
+
+		if (email.length == 0 || password.length == 0) {
+			setIsButtonDisabled(true);
+		} else {
+			setIsButtonDisabled(false);
+		}
+	}, [email, password]);
 
 	return (
 		<Grid
