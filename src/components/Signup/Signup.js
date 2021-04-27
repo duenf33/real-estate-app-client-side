@@ -1,4 +1,10 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
+
+import jwtDecode from "jwt-decode";
+import { checkIsUserLoggedIn } from "../lib/helpers";
+import Axios from "../lib/axios/Axios";
+
 import { makeStyles } from "@material-ui/core/styles";
 import {
 	FormControl,
@@ -74,11 +80,22 @@ function Signup() {
 		handleLastNameOnBlur,
 	] = useInputHooks();
 
-	function handleOnSubmit(e) {
+	const handleOnSubmit = async (e) => {
 		e.preventDefault();
 
-		console.log(username);
-	}
+		try {
+			let result = await Axios.post("/users/sign-up", {
+				username,
+				firstName,
+				lastName,
+				email,
+				password,
+			});
+			console.log(result);
+		} catch (e) {
+			console.log(e);
+		}
+	};
 
 	useEffect(() => {
 		if (
