@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-import jwtDecode from 'jwt-decode'
-import { checkIsUserLoggedIn } from '../lib/helpers'
-import Axios from '../lib/axios/Axios'
+import jwtDecode from "jwt-decode";
+import { checkIsUserLoggedIn } from "../lib/helpers";
+import Axios from "../lib/axios/Axios";
 
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -52,11 +53,19 @@ function Login() {
 		handleEmailOnBlur,
 	] = useEmailHooks();
 
-	function handleOnSubmit(e) {
+	const handleOnSubmit = async (e) => {
 		e.preventDefault();
 
-		console.log(email);
-	}
+		try {
+			let result = await Axios.post("/users/login", {
+				email,
+				password,
+			});
+			console.log(result);
+		} catch (e) {
+			console.log(e);
+		}
+	};
 
 	useEffect(() => {
 		if (inputEmailError === false && inputPasswordError === false) {

@@ -12,15 +12,15 @@ function usePasswordHooks() {
 		let inputValue = e.target.value;
 		setInput(inputValue);
 
-		if (isStrongPassword(inputValue)) {
-			setInputError(false);
-			setErrorMessage("");
-		} else {
-			setInputError(true);
-			setErrorMessage(
-				`Please check is your password is strong. Minimum Length 8 characters, 1 lowercase, 1 uppercase, 1 number and 1 symbol or special character.`
-			);
-		}
+		// if (isStrongPassword(inputValue)) {
+		// 	setInputError(false);
+		// 	setErrorMessage("");
+		// } else {
+		// 	setInputError(true);
+		// 	setErrorMessage(
+		// 		`Please check is your password is strong. Minimum Length 8 characters, 1 lowercase, 1 uppercase, 1 number and 1 symbol or special character.`
+		// 	);
+		// }
 	}
 
 	function handlePasswordOnBlur() {
