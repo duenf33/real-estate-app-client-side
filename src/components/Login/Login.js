@@ -61,7 +61,10 @@ function Login() {
 				email,
 				password,
 			});
-			console.log(result);
+			console.log(result.data.jwtToken);
+			let getJwtTokenFromLocalStorage = localStorage.getItem("jwtToken");
+			let decodedJwtToken = jwtDecode(getJwtTokenFromLocalStorage);
+			console.log(decodedJwtToken.email);
 		} catch (e) {
 			console.log(e);
 		}
