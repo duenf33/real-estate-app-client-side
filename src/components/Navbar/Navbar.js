@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { AppBar, Toolbar, Typography, Button } from "@material-ui/core";
+import { userLoggedIn } from "../lib/helpers";
 
 import { NavLink } from "react-router-dom";
 
@@ -29,6 +30,25 @@ function Navbar() {
 					>
 						ESTATE FOR REAL
 					</Typography>
+					{userLoggedIn() ? (
+						<>
+					<NavLink
+						to="/Profile"
+						exact
+						className="nav-link"
+						activeClassName="active-nav-link">
+						<Button color="inherit">Profile</Button>
+					</NavLink>
+					<NavLink
+						to="/login"
+						exact
+						className="nav-link"
+						activeClassName="active-nav-link">
+						<Button color="inherit">Log out</Button>
+							</NavLink>
+							</>
+					) : (
+							<>
 					<NavLink
 						to="/login"
 						exact
@@ -42,7 +62,9 @@ function Navbar() {
 						className="nav-link"
 						activeClassName="active-nav-link">
 						<Button color="inherit">Sign up</Button>
-					</NavLink>
+								</NavLink>
+								</>
+						)}
 				</Toolbar>
 			</AppBar>
 		</div>

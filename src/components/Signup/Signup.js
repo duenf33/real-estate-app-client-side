@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import jwtDecode from "jwt-decode";
-import { checkIsUserLoggedIn } from "../lib/helpers";
+import { userLoggedIn } from "../lib/helpers";
 import Axios from "../lib/axios/Axios";
 
 import { makeStyles } from "@material-ui/core/styles";

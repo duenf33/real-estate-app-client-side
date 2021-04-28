@@ -11,9 +11,9 @@ function MainRouter() {
 		<>
 			<Navbar />
 			<Switch>
-				<Route path="/login" component={Login} />
-				<Route path="/Sign-up" component={Signup} />
-				<Route path="/" component={Home} />
+				<Route exact path="/login" component={Login} />
+				<Route exact path="/Sign-up" component={Signup} />
+				<Route exact path="/" component={Home} />
 			</Switch>
 		</>
 	);

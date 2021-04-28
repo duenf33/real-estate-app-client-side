@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import jwtDecode from "jwt-decode";
-import { checkIsUserLoggedIn } from "../lib/helpers";
+import { userLoggedIn } from "../lib/helpers";
 import Axios from "../lib/axios/Axios";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -20,6 +20,7 @@ import MuiAlert from "@material-ui/lab/Alert";
 
 import useEmailHooks from "../hooks/useEmailHooks";
 import usePasswordHooks from "../hooks/usePasswordHooks";
+import { authReducer } from "../reducers/authReducer";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -61,12 +62,16 @@ function Login() {
 				email,
 				password,
 			});
-			console.log(result.data.jwtToken);
-			let getJwtTokenFromLocalStorage = localStorage.getItem("jwtToken");
-			let decodedJwtToken = jwtDecode(getJwtTokenFromLocalStorage);
-			console.log(decodedJwtToken.email);
+			localStorage.setItem("jwtToken", result.data.jwtToken);
+			let decodedJWToken = jwtDecode(result.data.jwtToken);
+			console.log(decodedJWToken.email);
+			if (userLoggedIn()) {
+				console.log("line 69 works");
+			} else {
+				console.log("line 71 is not working");
+			}
 		} catch (e) {
-			console.log(e);
+			console.log(e.message);
 		}
 	};
 

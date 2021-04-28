@@ -1,7 +1,17 @@
-import React from "react";
+import React, { createContext, useReducer } from "react";
+import { authReducer } from "../reducers/authReducer";
 
-function AuthContext() {
-	return <div></div>;
-}
+export const AuthContext = createContext();
 
-export default AuthContext;
+const AuthContextProvider = (props) => {
+	const [auth, dispatch] = useReducer(authReducer, []);
+	return (
+		<AuthContext.Provider value={(authS, dispatch)}>
+			{/* <App /> */}
+			{/* {console.log("this works")} */}
+			{props.children}
+		</AuthContext.Provider>
+	);
+};
+
+export default AuthContextProvider;
