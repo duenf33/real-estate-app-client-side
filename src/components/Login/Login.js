@@ -31,11 +31,11 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-function Login() {
+function Login(props) {
 	const classes = useStyles();
 
 	const context = useContext(AuthContext);
-	console.log(context.dispatch);
+	console.log(context.dis);
 
 	const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
@@ -57,6 +57,14 @@ function Login() {
 		handleEmailOnBlur,
 	] = useEmailHooks();
 
+	function reRoutePage() {
+		if (context.state.Auth) {
+			props.history.push("/main-page");
+		} else {
+			props.history.push("/login");
+		}
+	}
+
 	const handleOnSubmit = async (e) => {
 		e.preventDefault();
 
@@ -69,6 +77,11 @@ function Login() {
 			let decodedJWToken = jwtDecode(result.data.jwtToken);
 			console.log(decodedJWToken.email);
 			context.dispatch({ type: "LOGIN", user: decodedJWToken.email });
+			if (userLoggedIn()) {
+				props.history.push("users/main-page");
+			} else {
+				props.history.push("users/login");
+			}
 		} catch (e) {
 			console.log(e);
 			console.log(e.message);
@@ -89,6 +102,10 @@ function Login() {
 			setIsButtonDisabled(false);
 		}
 	}, [email, password]);
+
+	// useEffect(() => {
+	// 	reRoutePage();
+	// });
 
 	return (
 		<Grid
