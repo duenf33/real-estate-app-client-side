@@ -22,6 +22,12 @@ function Navbar() {
 	const context = useContext(AuthContext);
 	console.log(context);
 
+	function handleLogOut() {
+		context.dispatch({ type: "LOGOUT" });
+
+		window.localStorage.removeItem("jwtToken");
+	}
+
 	return (
 		<div className={classes.root}>
 			<AppBar position="static">
@@ -43,9 +49,7 @@ function Navbar() {
 								exact
 								className="nav-link"
 								activeClassName="active-nav-link">
-								<Button
-									onClick={() => context.dispatch({ type: "LOGOUT", handleLogOut() })}
-									color="inherit">
+								<Button onClick={handleLogOut} color="inherit">
 									Log out
 								</Button>
 							</NavLink>

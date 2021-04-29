@@ -35,7 +35,7 @@ function Login() {
 	const classes = useStyles();
 
 	const context = useContext(AuthContext);
-	console.log(context);
+	console.log(context.dispatch);
 
 	const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 

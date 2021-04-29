@@ -7,10 +7,6 @@ const initialState = {
 	user: null,
 };
 
-function handleLogOut() {
-	localStorage.removeItem("jwtToken");
-}
-
 function reducerFunc(state, action) {
 	switch (action.type) {
 		case "LOGIN":
@@ -23,12 +19,10 @@ function reducerFunc(state, action) {
 			};
 
 		case "LOGOUT":
-			return (
-				{
-					isAuth: false,
-					user: null,
-				}
-			);
+			return {
+				isAuth: false,
+				user: null,
+			};
 
 		default:
 			return state;
@@ -36,7 +30,7 @@ function reducerFunc(state, action) {
 }
 
 function AuthContextComponent({ children }) {
-	const [state, dispatch] = useReducer(handleLogOut, reducerFunc, initialState);
+	const [state, dispatch] = useReducer(reducerFunc, initialState);
 	return (
 		<AuthContext.Provider value={{ state, dispatch }}>
 			{children}
