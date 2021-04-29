@@ -43,7 +43,11 @@ function Navbar() {
 								exact
 								className="nav-link"
 								activeClassName="active-nav-link">
-								<Button color="inherit">Log out</Button>
+								<Button
+									onClick={() => context.dispatch({ type: "LOGOUT", handleLogOut() })}
+									color="inherit">
+									Log out
+								</Button>
 							</NavLink>
 						</>
 					) : (
