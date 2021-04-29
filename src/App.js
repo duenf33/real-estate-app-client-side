@@ -2,6 +2,7 @@ import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import { deepOrange } from "@material-ui/core/colors";
 import { BrowserRouter as Router } from "react-router-dom";
+import AuthContextComponent from "./components/context/AuthContext";
 
 import Spinner from "./components/Spinner/Spinner";
 import MainRouter from "./MainRouter";
@@ -28,7 +29,9 @@ function App() {
 		<ThemeProvider theme={theme}>
 			<React.Suspense fallback={<Spinner />}>
 				<Router>
-					<MainRouter />
+					<AuthContextComponent>
+						<MainRouter />
+					</AuthContextComponent>
 				</Router>
 			</React.Suspense>
 		</ThemeProvider>

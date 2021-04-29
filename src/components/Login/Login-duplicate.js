@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import jwtDecode from "jwt-decode";
@@ -20,7 +20,7 @@ import MuiAlert from "@material-ui/lab/Alert";
 
 import useEmailHooks from "../hooks/useEmailHooks";
 import usePasswordHooks from "../hooks/usePasswordHooks";
-import { AuthContext } from "../context/AuthContext";
+import { authReducer } from "../reducers/authReducer";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -33,9 +33,6 @@ const useStyles = makeStyles((theme) => ({
 
 function Login() {
 	const classes = useStyles();
-
-	const context = useContext(AuthContext);
-	console.log(context);
 
 	const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
@@ -68,9 +65,12 @@ function Login() {
 			localStorage.setItem("jwtToken", result.data.jwtToken);
 			let decodedJWToken = jwtDecode(result.data.jwtToken);
 			console.log(decodedJWToken.email);
-			context.dispatch({ type: "LOGIN", user: decodedJWToken.email });
+			if (userLoggedIn()) {
+				console.log("line 69 works");
+			} else {
+				console.log("line 71 is not working");
+			}
 		} catch (e) {
-			console.log(e);
 			console.log(e.message);
 		}
 	};
