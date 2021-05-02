@@ -21,7 +21,7 @@ function useInputHooks() {
 			errorMessage = `${inputName} cannot have any special characters and numbers`;
 		} else {
 			checkRegex = /[!@#$%^&*()\[\],.?":;{}|<>]/g;
-			errorMessage = `${inputName} cannot have any special characters`;
+			errorMessage = `${inputName} cannot have special characters`;
 		}
 		if (matches(inputValue, checkRegex)) {
 			setInputError(true);
