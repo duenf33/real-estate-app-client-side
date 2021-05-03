@@ -18,7 +18,7 @@ function useSearchHooks() {
 
 		if (inputName === "address search") {
 			checkRegex = /[!@#$%^&*()\[\]?":;{}|<>]/g;
-			errorMessage = `${inputName} cannot have special characters other than "period" and "coma"`;
+			errorMessage = `${inputName} cannot have special characters other than a period "." or a coma ","`;
 		}
 		if (matches(inputValue, checkRegex)) {
 			setInputError(true);

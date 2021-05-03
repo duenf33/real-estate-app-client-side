@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import dotenv from "dotenv";
 import axios from "axios";
 
 import jwtDecode from "jwt-decode";
@@ -19,8 +20,6 @@ import {
 import MuiAlert from "@material-ui/lab/Alert";
 
 import useSearchHooks from "../hooks/useSearchHooks";
-// import useEmailHooks from "../hooks/useEmailHooks";
-// import usePasswordHooks from "../hooks/usePasswordHooks";
 import { AuthContext } from "../context/AuthContext";
 
 const useStyles = makeStyles((theme) => ({
@@ -31,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 }));
-
+dotenv.config();
 function MainPage(props) {
 	const classes = useStyles();
 
@@ -40,36 +39,24 @@ function MainPage(props) {
 
 	const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
-	// const [
-	// 	password,
-	// 	setPassword,
-	// 	inputPasswordError,
-	// 	errorPasswordMessage,
-	// 	isPasswordOnBlur,
-	// 	handlePasswordOnBlur,
-	// ] = usePasswordHooks();
-
-	// const [
-	// 	email,
-	// 	setEmail,
-	// 	inputEmailError,
-	// 	errorEmailMessage,
-	// 	isEmailOnBlur,
-	// 	handleEmailOnBlur,
-	// ] = useEmailHooks();
-
-	function reRoutePage() {
-		if (context.state.Auth) {
-			props.history.push("/main-page");
-		} else {
-			props.history.push("/login");
-		}
-	}
+	const [
+		search,
+		setSearch,
+		inputSearchError,
+		errorSearchMessage,
+		isSearchOnBlur,
+		handleSearchOnBlur,
+	] = useSearchHooks();
 
 	const handleOnSubmit = async (e) => {
 		e.preventDefault();
 
 		try {
+			let searchData = await Axios.get(
+				`${process.env.REACT_APP_API_URL}?token=${process.env.REACT_APP_API_KEY}&combined_address=${search}`
+				// `http://omdbapi.com/?apikey=73c0f1fc&s=${search}`
+			);
+			console.log(searchData);
 			// let result = await Axios.post("/users/login", {
 			// 	email,
 			// 	password,
@@ -89,24 +76,20 @@ function MainPage(props) {
 		}
 	};
 
-	// useEffect(() => {
-	// 	if (inputEmailError === false && inputPasswordError === false) {
-	// 		setIsButtonDisabled(false);
-	// 	} else {
-	// 		setIsButtonDisabled(true);
-	// 		return;
-	// 	}
+	useEffect(() => {
+		if (inputSearchError === false) {
+			setIsButtonDisabled(false);
+		} else {
+			setIsButtonDisabled(true);
+			return;
+		}
 
-	// 	if (email.length == 0 || password.length == 0) {
-	// 		setIsButtonDisabled(true);
-	// 	} else {
-	// 		setIsButtonDisabled(false);
-	// 	}
-	// }, [email, password]);
-
-	// useEffect(() => {
-	// 	reRoutePage();
-	// });
+		if (search.length == 0) {
+			setIsButtonDisabled(true);
+		} else {
+			setIsButtonDisabled(false);
+		}
+	}, [search]);
 
 	return (
 		<Grid
@@ -121,21 +104,19 @@ function MainPage(props) {
 					className={classes.root}
 					autoComplete="on"
 					onSubmit={handleOnSubmit}>
-					<FormControl
-					// error={inputEmailError}
-					>
+					<FormControl error={inputSearchError}>
 						<InputLabel htmlFor="component-address">
 							full street address, city, state & zip code
 						</InputLabel>
 						<Input
 							id="component-address"
 							name="address search"
-							// value={email}
-							// onChange={(e) => setEmail(e)}
-							// onBlur={() => handleEmailOnBlur()}
+							value={search}
+							onChange={(e) => setSearch(e)}
+							onBlur={() => handleSearchOnBlur()}
 						/>
 						<FormHelperText id="component-error-text">
-							{/* {inputEmailError && errorEmailMessage} */}
+							{inputSearchError && errorSearchMessage}
 						</FormHelperText>
 					</FormControl>
 					<br />
@@ -143,10 +124,11 @@ function MainPage(props) {
 						variant="contained"
 						color="primary"
 						type="submit"
-						// disabled={isButtonDisabled}
-					>
+						disabled={isButtonDisabled}>
 						Submit
 					</Button>
+					<br />
+					<h1>{searchData }</h1>
 				</form>
 			</Grid>
 		</Grid>
